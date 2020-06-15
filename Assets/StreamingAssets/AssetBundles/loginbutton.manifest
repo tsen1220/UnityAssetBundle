@@ -1,17 +1,15 @@
 ManifestFileVersion: 0
-CRC: 2552195745
+CRC: 2697530545
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fd6c7e260d4bd41e517a03e4b1f79f54
+    Hash: 00a3a78cc3127ca633ee78b879b41886
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 92ef6a0df90984ef5363e9fce106c3ae
+    Hash: 3c4d2829d260ae869f93ca68cef5af48
 HashAppended: 0
 ClassTypes:
 - Class: 1
-  Script: {instanceID: 0}
-- Class: 28
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -27,4 +25,5 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Prefabs/Login.prefab
-Dependencies: []
+Dependencies:
+- /Users/tsen/Documents/Assets Bundle/Assets/StreamingAssets/AssetBundles/loginimage

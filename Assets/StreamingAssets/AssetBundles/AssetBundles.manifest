@@ -1,7 +1,11 @@
 ManifestFileVersion: 0
-CRC: 4280796174
+CRC: 2001447911
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: loginbutton
+      Dependencies:
+        Dependency_0: loginimage
+    Info_1:
+      Name: loginimage
       Dependencies: {}
