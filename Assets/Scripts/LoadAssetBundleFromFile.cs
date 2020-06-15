@@ -23,15 +23,6 @@ public class LoadAssetBundleFromFile : MonoBehaviour
 		login.transform.SetParent(parents.transform);
 		login.transform.localPosition = new Vector2 (-400, 0);
 
-		// Load Sprite
-		AssetBundle loginImage = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundles", "loginimage"));
-
-		if (loginImage == null)
-		{
-			Debug.Log("Failed to load AssetBundle!");
-			return;
-		}
-		Sprite image = loginImage.LoadAsset<Sprite>("line-icon");
-		icon.GetComponent<UnityEngine.UI.Image>().sprite = image;
+		icon.GetComponent<UnityEngine.UI.Image>().sprite = login.GetComponentsInChildren<UnityEngine.UI.Image>()[2].sprite;
 	}
 }
