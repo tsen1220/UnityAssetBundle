@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 4280796174
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: loginbutton
+      Dependencies: {}

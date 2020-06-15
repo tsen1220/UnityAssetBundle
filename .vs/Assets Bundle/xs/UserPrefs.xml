@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{DA58CAFF-65BD-7E21-0EB3-E1004E4E2F99}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Editor/AssetBundlesBuilder.cs">
+    <Files>
+      <File FileName="Assets/Scripts/LoadAssetBundleFromFile.cs" Line="23" Column="1" />
+      <File FileName="Assets/Editor/AssetBundlesBuilder.cs" Line="12" Column="29" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Assets Bundle" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Editor" expanded="True">
+                <Node name="AssetBundlesBuilder.cs" selected="True" />
+              </Node>
+              <Node name="Scripts" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp-Editor PreferredExecutionTarget="6f22f1d8-c04f-4e0b-a94e-b52241acfe5a" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6f22f1d8-c04f-4e0b-a94e-b52241acfe5a" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
