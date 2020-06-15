@@ -9,7 +9,7 @@ public class LoadAssetBundleFromFile : MonoBehaviour
 
 	private void Start()
 	{
-		AssetBundle loginBundle = AssetBundle.LoadFromFile(Path.Combine(Application.dataPath, "AssetBundles", "loginbutton"));
+		AssetBundle loginBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundles", "loginbutton"));
 
 		if (loginBundle == null)
 		{

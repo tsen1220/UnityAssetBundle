@@ -9,7 +9,7 @@ public class AssetsBundleBuilder : MonoBehaviour
 	[MenuItem("Assets/Build AssetBundles")]
 	public static void BuildAllAssetBundles()
 	{
-		string directory = "Assets/AssetBundles";
+		string directory = Path.Combine(Application.streamingAssetsPath, "AssetBundles");
 		if (!Directory.Exists(directory))
 		{
 			Directory.CreateDirectory(directory);
