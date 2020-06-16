@@ -29,6 +29,6 @@ public class LoadAssetBundleFromFile : MonoBehaviour
 		login.transform.SetParent(parents.transform);
 		login.transform.localPosition = new Vector2 (-400, 0);
 
-		icon.GetComponent<UnityEngine.UI.Image>().sprite = login.GetComponentsInChildren<UnityEngine.UI.Image>()[2].sprite;
+		icon.GetComponent<UnityEngine.UI.Image>().sprite = login.GetComponentsInChildren<UnityEngine.UI.Image>()[0].sprite;
 	}
 }

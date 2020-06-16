@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
+using System.Threading.Tasks;
 
 public class LoadAssetBundleFromWebServer : MonoBehaviour
 {
 	public GameObject parents;
 	public GameObject icon;
+	private AssetBundleManifest manifest;
 
-	private void Start()
+	private async void Start()
 	{
-		StartCoroutine(GetAssetBundleManifest("http://127.0.0.1:8888/AssetBundles", "loginButton"));
+		StartCoroutine(GetAssetBundleManifest("http://127.0.0.1:8888/AssetBundles", "loginbutton"));
+		while(manifest == null)
+		{
+			await Task.Yield();
+		}
+		Hash128 hash = manifest.GetAssetBundleHash("loginbutton");
+		StartCoroutine(GetLoginAssetBundle("http://127.0.0.1:8888/loginbutton", hash, "loginbutton"));
 	}
 
 	private IEnumerator GetLoginAssetBundle(string uri, Hash128 hash, string bundleName)
@@ -47,7 +55,7 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 			GameObject login = Instantiate(prefab);
 			login.transform.SetParent(parents.transform);
 			login.transform.localPosition = new Vector2(-400, 0);
-			icon.GetComponent<UnityEngine.UI.Image>().sprite = login.GetComponentsInChildren<UnityEngine.UI.Image>()[1].sprite;
+			icon.GetComponent<UnityEngine.UI.Image>().sprite = login.GetComponentsInChildren<UnityEngine.UI.Image>()[0].sprite;
 
 			
 			bundleWebRequest.Dispose();
@@ -72,8 +80,7 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 			AssetBundle manifestBundle = DownloadHandlerAssetBundle.GetContent(bundleWebRequest);
 
 			AssetBundleManifest manifest = manifestBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-			Hash128 hash = manifest.GetAssetBundleHash(bundleName);
-			StartCoroutine(GetLoginAssetBundle("http://127.0.0.1:8888/loginbutton", hash, "loginbutton"));
+			this.manifest = manifest;
 			bundleWebRequest.Dispose();
 		}
 	}
