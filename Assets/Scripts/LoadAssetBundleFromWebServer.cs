@@ -11,12 +11,7 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 
 	private void Start()
 	{
-		// Get Hash
-		AssetBundle manifestBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundles", "AssetBundles"));
-		AssetBundleManifest manifest = manifestBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-		Hash128 hash = manifest.GetAssetBundleHash("loginbutton");
-
-		StartCoroutine(GetLoginAssetBundle("http://127.0.0.1:8888/loginbutton", hash, "loginbutton"));
+		StartCoroutine(GetAssetBundleManifest("http://127.0.0.1:8888/AssetBundles", "loginButton"));
 	}
 
 	private IEnumerator GetLoginAssetBundle(string uri, Hash128 hash, string bundleName)
@@ -55,6 +50,30 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 			icon.GetComponent<UnityEngine.UI.Image>().sprite = login.GetComponentsInChildren<UnityEngine.UI.Image>()[1].sprite;
 
 			
+			bundleWebRequest.Dispose();
+		}
+	}
+
+	private IEnumerator GetAssetBundleManifest(string uri, string bundleName)
+	{
+		while (!Caching.ready)
+		{
+			yield return null;
+		}
+		UnityWebRequest bundleWebRequest = UnityWebRequestAssetBundle.GetAssetBundle(uri);
+		yield return bundleWebRequest.SendWebRequest();
+
+		if (bundleWebRequest.isHttpError)
+		{
+			yield break;
+		}
+		else
+		{
+			AssetBundle manifestBundle = DownloadHandlerAssetBundle.GetContent(bundleWebRequest);
+
+			AssetBundleManifest manifest = manifestBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+			Hash128 hash = manifest.GetAssetBundleHash(bundleName);
+			StartCoroutine(GetLoginAssetBundle("http://127.0.0.1:8888/loginbutton", hash, "loginbutton"));
 			bundleWebRequest.Dispose();
 		}
 	}
