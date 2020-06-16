@@ -4,9 +4,11 @@ This article will introduce how to use unity assetBundles with `UnityWebRequestA
 
 # 1. AssetBundles Build Script
 
-We create Editor directory and have new script for building.
+We create `Editor` directory and have new script for building.
 
 AssetBundles are different according to platform.
+
+Therefore, we need to check `BuildTarget`.
 
 Besides, we need to create directory to place our bundles.
 
@@ -46,11 +48,11 @@ public class AssetsBundleBuilder : MonoBehaviour
 
 # 2. Mark AssetBundles Label
 
-After build script being done, we mark assetBundle label for assets.
+After build script is done, we mark assetBundle label for assets.
 
 Unity will create Assetbundles with assetBundle label.
 
-For example, I selected the `loginbutton` label.
+For example, I selected the `loginbutton` label for `Login` Prefab.
 
 ![Image of MD1](https://raw.githubusercontent.com/tsen1220/UnityAssetBundle/master/Image/MD1.png)
 
@@ -74,7 +76,7 @@ We download AssetBundles from http server and extract assets from AssetBundles w
 
 However, We should check the Assetbundles version from manifest with `Hash128`.
 
-If Assetbundles version is newest and bundles had been ever downloaded, Unity will load AssetBundles from cache.
+If Assetbundles version is newest and newest bundles had been ever downloaded, Unity will load AssetBundles from cache.
 
 For example:
 
