@@ -11,12 +11,28 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 
 	private void Start()
 	{
-		StartCoroutine(GetLoginAssetBundle("http://127.0.0.1:8888/loginbutton"));
+		// Get Hash
+		AssetBundle manifestBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundles", "AssetBundles"));
+		AssetBundleManifest manifest = manifestBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+		Hash128 hash = manifest.GetAssetBundleHash("loginbutton");
+
+		StartCoroutine(GetLoginAssetBundle("http://127.0.0.1:8888/loginbutton", hash, "loginbutton"));
 	}
 
-	private IEnumerator GetLoginAssetBundle(string uri)
+	private IEnumerator GetLoginAssetBundle(string uri, Hash128 hash, string bundleName)
 	{
-		UnityWebRequest bundleWebRequest = UnityWebRequestAssetBundle.GetAssetBundle(uri);
+		while (!Caching.ready)
+		{
+			yield return null;
+		}
+
+		if (!Caching.IsVersionCached("http://127.0.0.1:8888/loginbutton", hash))
+		{
+			Debug.Log(Caching.IsVersionCached("http://127.0.0.1:8888/loginbutton", hash));
+			Caching.ClearAllCachedVersions(bundleName);
+		}
+
+		UnityWebRequest bundleWebRequest = UnityWebRequestAssetBundle.GetAssetBundle(uri, hash);
 		yield return bundleWebRequest.SendWebRequest();
 
 		if (bundleWebRequest.isHttpError)

@@ -10,6 +10,12 @@ public class LoadAssetBundleFromFile : MonoBehaviour
 
 	private void Start()
 	{
+		// Get Hash
+		AssetBundle manifestBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundles", "AssetBundles"));
+		AssetBundleManifest manifest = manifestBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+		Hash128 hash = manifest.GetAssetBundleHash("loginbutton");
+		Debug.Log(hash);
+
 		// Load GameObject
 		AssetBundle loginBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "AssetBundles", "loginbutton"));
 
