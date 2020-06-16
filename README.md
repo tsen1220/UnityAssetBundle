@@ -1,6 +1,6 @@
 # Unity AssetBundles
 
-This article will introduce how to use unity assetBundles.
+This article will introduce how to use unity assetBundles with `UnityWebRequestAssetBundle.GetAssetBundle`.
 
 # 1. AssetBundles Build Script
 
@@ -50,3 +50,103 @@ After build script being done, we mark assetBundle label for assets.
 
 Unity will create Assetbundles with assetBundle label.
 
+For example, I selected the `loginbutton` label.
+
+![Image of MD1](https://raw.githubusercontent.com/tsen1220/UnityAssetBundle/master/Image/MD1.png)
+
+# 3. Build
+
+We can build AssetBundles after clicking customized menuitem.
+
+# 4. Http Server
+
+We need to create Http server to place and download our AssetBundles.
+
+For example, I used `php` to create server. 
+
+```
+php -S 127.0.0.1:8888
+```
+
+# 5. Load AssetBundles
+
+We download AssetBundles from http server and extract assets from AssetBundles with coroutine.
+
+However, We should check the Assetbundles version from manifest with `Hash128`.
+
+If Assetbundles version is newest and bundles had been ever downloaded, Unity will load AssetBundles from cache.
+
+For example:
+
+```
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Networking;
+using System.Threading.Tasks;
+
+public class LoadAssetBundleFromWebServer : MonoBehaviour
+{
+	private AssetBundleManifest manifest;
+
+	private async void Start()
+	{
+		StartCoroutine(GetAssetBundleManifest("http://127.0.0.1:8888/AssetBundles"));
+		while(manifest == null)
+		{
+			await Task.Yield();
+		}
+		Hash128 hash = manifest.GetAssetBundleHash("loginbutton");
+		StartCoroutine(GetLoginAssetBundle("http://127.0.0.1:8888/loginbutton", hash));
+	}
+
+	private IEnumerator GetLoginAssetBundle(string uri, Hash128 hash)
+	{
+		UnityWebRequest bundleWebRequest = UnityWebRequestAssetBundle.GetAssetBundle(uri, hash);
+		yield return bundleWebRequest.SendWebRequest();
+
+		if (bundleWebRequest.isHttpError)
+		{
+			yield break;
+		}
+		else
+		{
+			AssetBundle loginBundle = DownloadHandlerAssetBundle.GetContent(bundleWebRequest);
+
+			if (loginBundle == null)
+			{
+				Debug.Log("Failed to load AssetBundle!");
+				yield break;
+			}
+			GameObject prefab = loginBundle.LoadAsset<GameObject>("Login");
+			GameObject login = Instantiate(prefab);
+			
+			bundleWebRequest.Dispose();
+		}
+	}
+
+	private IEnumerator GetAssetBundleManifest(string uri)
+	{
+		UnityWebRequest bundleWebRequest = UnityWebRequestAssetBundle.GetAssetBundle(uri);
+		yield return bundleWebRequest.SendWebRequest();
+
+		if (bundleWebRequest.isHttpError)
+		{
+			yield break;
+		}
+		else
+		{
+			AssetBundle manifestBundle = DownloadHandlerAssetBundle.GetContent(bundleWebRequest);
+
+			AssetBundleManifest manifest = manifestBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+			this.manifest = manifest;
+			bundleWebRequest.Dispose();
+		}
+	}
+}
+```
+
+# 6. Play
+
+Finally, We load assets with AssetBundles.
+
+![Image of MD2](https://raw.githubusercontent.com/tsen1220/UnityAssetBundle/master/Image/MD2.png)
