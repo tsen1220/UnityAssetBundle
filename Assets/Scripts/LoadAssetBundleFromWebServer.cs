@@ -13,7 +13,7 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 
 	private async void Start()
 	{
-		StartCoroutine(GetAssetBundleManifest("http://127.0.0.1:8888/AssetBundles", "loginbutton"));
+		StartCoroutine(GetAssetBundleManifest("http://127.0.0.1:8888/AssetBundles"));
 		while(manifest == null)
 		{
 			await Task.Yield();
@@ -62,7 +62,7 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 		}
 	}
 
-	private IEnumerator GetAssetBundleManifest(string uri, string bundleName)
+	private IEnumerator GetAssetBundleManifest(string uri)
 	{
 		while (!Caching.ready)
 		{
