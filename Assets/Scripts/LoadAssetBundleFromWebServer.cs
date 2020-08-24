@@ -14,7 +14,7 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 	private async void Start()
 	{
 		StartCoroutine(GetAssetBundleManifest("http://127.0.0.1:8888/AssetBundles"));
-		while(manifest == null)
+		while (manifest == null)
 		{
 			await Task.Yield();
 		}
@@ -56,7 +56,6 @@ public class LoadAssetBundleFromWebServer : MonoBehaviour
 			login.transform.SetParent(parents.transform);
 			login.transform.localPosition = new Vector2(-400, 0);
 			icon.GetComponent<UnityEngine.UI.Image>().sprite = login.GetComponentsInChildren<UnityEngine.UI.Image>()[0].sprite;
-
 			
 			bundleWebRequest.Dispose();
 		}
